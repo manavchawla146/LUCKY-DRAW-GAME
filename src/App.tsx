@@ -147,6 +147,16 @@ export default function App() {
   // --- Initialization ---
   const initBalls = () => {
     const newBalls: BallData[] = [];
+    
+    // Handle case where inputs are cleared
+    if (startNum === 0 || endNum === startNum + 1) {
+      setBalls([]);
+      setWinners([]);
+      setCurrentWinner(null);
+      setIsPicking(false);
+      return;
+    }
+    
     const count = endNum - startNum + 1;
     const radius = 120; // Radius of the glass case
 
@@ -532,18 +542,41 @@ export default function App() {
                       <span className="text-xs text-slate-400 uppercase font-bold">Start</span>
                       <input 
                         type="number" 
-                        value={startNum}
-                        onChange={(e) => setStartNum(Math.max(0, parseInt(e.target.value) || 0))}
+                        value={startNum === 0 ? '' : startNum}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '') {
+                            setStartNum(0);
+                          } else {
+                            const numValue = parseInt(value);
+                            setStartNum(isNaN(numValue) ? 0 : Math.max(0, numValue));
+                          }
+                        }}
+                        onFocus={(e) => {
+                          if (e.target.value === '0') {
+                            e.target.select();
+                          }
+                        }}
                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold"
+                        placeholder="Enter start number"
                       />
                     </div>
                     <div className="space-y-2">
                       <span className="text-xs text-slate-400 uppercase font-bold">End</span>
                       <input 
                         type="number" 
-                        value={endNum}
-                        onChange={(e) => setEndNum(Math.max(startNum + 1, parseInt(e.target.value) || startNum + 1))}
+                        value={endNum === startNum + 1 ? '' : endNum}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (value === '') {
+                            setEndNum(startNum + 1);
+                          } else {
+                            const numValue = parseInt(value);
+                            setEndNum(isNaN(numValue) ? startNum + 1 : Math.max(startNum + 1, numValue));
+                          }
+                        }}
                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold"
+                        placeholder="Enter end number"
                       />
                     </div>
                   </div>
@@ -556,11 +589,20 @@ export default function App() {
                   </label>
                   <input 
                     type="number" 
-                    value={numWinners}
-                    onChange={(e) => setNumWinners(Math.max(1, parseInt(e.target.value) || 1))}
+                    value={numWinners === 1 ? '' : numWinners}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === '') {
+                        setNumWinners(1);
+                      } else {
+                        const numValue = parseInt(value);
+                        setNumWinners(isNaN(numValue) ? 1 : Math.max(1, numValue));
+                      }
+                    }}
                     className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold"
+                    placeholder="Enter number of winners"
                   />
-                  <p className="text-xs text-slate-400">Total balls: {endNum - startNum + 1}</p>
+                  <p className="text-xs text-slate-400">Total balls: {startNum === 0 || endNum === startNum + 1 ? 0 : endNum - startNum + 1}</p>
                 </div>
 
                 <button
