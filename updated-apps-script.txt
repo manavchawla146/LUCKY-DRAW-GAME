@@ -1,0 +1,93 @@
+function doGet(e) {
+  return doPost(e);
+}
+
+function doPost(e) {
+  try {
+    // Handle case where e is undefined or null
+    if (!e || !e.parameter) {
+      const errorData = { error: "No parameters provided. Please provide 'start' and 'end' parameters." };
+      const jsonError = JSON.stringify(errorData);
+      const callback = e && e.parameter ? e.parameter.callback : null;
+      
+      if (callback) {
+        return ContentService
+          .createTextOutput(`${callback}(${jsonError})`)
+          .setMimeType(ContentService.MimeType.JAVASCRIPT);
+      }
+      return ContentService
+        .createTextOutput(jsonError)
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+    
+    const start = parseInt(e.parameter.start) || 1;
+    const end = parseInt(e.parameter.end) || 50;
+    const callback = e.parameter.callback;
+
+    const sheet = SpreadsheetApp
+      .getActiveSpreadsheet()
+      .getSheetByName("Form Responses 1");
+
+    if (!sheet) {
+      const errorData = { error: "Sheet 'Form Responses 1' not found" };
+      const jsonError = JSON.stringify(errorData);
+      
+      if (callback) {
+        return ContentService
+          .createTextOutput(`${callback}(${jsonError})`)
+          .setMimeType(ContentService.MimeType.JAVASCRIPT);
+      }
+      return ContentService
+        .createTextOutput(jsonError)
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Get all columns (A-G) - ID, Timestamp, Name, Email, Semester, Phone, Comments
+    const data = sheet.getRange(2, 1, sheet.getLastRow() - 1, 7).getValues();
+
+    let participants = [];
+
+    data.forEach(row => {
+      const id = parseInt(row[0]); // Column A: ID
+      if (!isNaN(id) && id >= start && id <= end) {
+        participants.push({
+          id: id,
+          timestamp: row[1] || '', // Column B: Timestamp
+          name: row[2] || '',      // Column C: Name
+          email: row[3] || '',     // Column D: Email
+          semester: row[4] || '',  // Column E: Semester
+          phone: row[5] || '',     // Column F: Phone
+          comments: row[6] || ''   // Column G: Comments
+        });
+      }
+    });
+
+    const jsonData = JSON.stringify(participants);
+    
+    // Return JSONP if callback is provided, otherwise return JSON
+    if (callback) {
+      return ContentService
+        .createTextOutput(`${callback}(${jsonData})`)
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    
+    return ContentService
+      .createTextOutput(jsonData)
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (error) {
+    const errorData = { error: error.toString(), message: "Script execution failed" };
+    const jsonError = JSON.stringify(errorData);
+    const callback = e && e.parameter ? e.parameter.callback : null;
+    
+    if (callback) {
+      return ContentService
+        .createTextOutput(`${callback}(${jsonError})`)
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
+    
+    return ContentService
+      .createTextOutput(jsonError)
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}

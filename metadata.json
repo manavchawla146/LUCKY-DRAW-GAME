@@ -1,0 +1,5 @@
+{
+  "name": "Lucky Ball Spinner",
+  "description": "A polished bingo-style lottery game with a glass ball spinner, admin controls for ranges and winners, and smooth ball-exit animations.",
+  "requestFramePermissions": []
+}
