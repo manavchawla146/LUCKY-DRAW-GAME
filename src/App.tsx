@@ -24,9 +24,11 @@ interface Participant {
   timestamp: string;
   name: string;
   email: string;
-  semester: string;
   phone: string;
-  comments?: string;
+  propertyType?: string;
+  investmentRange?: string;
+  timePeriod?: string;
+  areas?: string;
 }
 
 const BALL_COLORS = [
@@ -78,7 +80,7 @@ export default function App() {
   const fetchParticipantsFromSheets = async (start: number, end: number): Promise<Participant[]> => {
     try {
       // Use direct fetch since script returns JSON, not JSONP
-      const url = `https://script.google.com/macros/s/AKfycbz2eocdwIsURaw31I9g1JVLou6HNMkTBjhXRTScWUWGAlDa2Z9VtrIIJXcsOvhZ_l5Q/exec?start=${start}&end=${end}`;
+      const url = `https://script.google.com/macros/s/AKfycbxMPX5SCQXNLS14H7jxFZAZnZf0UczpLehxWJ0DsSShnY12Pj7N9jtU-UAHxQOX69vf/exec?start=${start}&end=${end}`;
       
       const response = await fetch(url, {
         method: 'GET',
@@ -549,12 +551,7 @@ export default function App() {
                             setStartNum(0);
                           } else {
                             const numValue = parseInt(value);
-                            setStartNum(isNaN(numValue) ? 0 : Math.max(0, numValue));
-                          }
-                        }}
-                        onFocus={(e) => {
-                          if (e.target.value === '0') {
-                            e.target.select();
+                            setStartNum(isNaN(numValue) ? 0 : numValue);
                           }
                         }}
                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold"
@@ -572,7 +569,7 @@ export default function App() {
                             setEndNum(startNum + 1);
                           } else {
                             const numValue = parseInt(value);
-                            setEndNum(isNaN(numValue) ? startNum + 1 : Math.max(startNum + 1, numValue));
+                            setEndNum(isNaN(numValue) ? startNum + 1 : numValue);
                           }
                         }}
                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold"
@@ -589,14 +586,14 @@ export default function App() {
                   </label>
                   <input 
                     type="number" 
-                    value={numWinners === 1 ? '' : numWinners}
+                    value={numWinners}
                     onChange={(e) => {
                       const value = e.target.value;
                       if (value === '') {
                         setNumWinners(1);
                       } else {
                         const numValue = parseInt(value);
-                        setNumWinners(isNaN(numValue) ? 1 : Math.max(1, numValue));
+                        setNumWinners(isNaN(numValue) ? 1 : numValue);
                       }
                     }}
                     className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none transition-all font-bold"
@@ -712,9 +709,13 @@ export default function App() {
                               </div>
                               {participant && (
                                 <div className="text-sm text-slate-600 space-y-1">
-                                  <p><span className="font-medium">Email:</span> {participant.email}</p>
                                   <p><span className="font-medium">Phone:</span> {participant.phone}</p>
-                                  <p><span className="font-medium">Semester:</span> {participant.semester}</p>
+                                  {participant.propertyType && (
+                                    <p><span className="font-medium">Property Type:</span> {participant.propertyType}</p>
+                                  )}
+                                  {participant.investmentRange && (
+                                    <p><span className="font-medium">Investment Range:</span> {participant.investmentRange}</p>
+                                  )}
                                 </div>
                               )}
                             </div>
