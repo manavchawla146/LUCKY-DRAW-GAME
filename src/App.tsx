@@ -80,7 +80,7 @@ export default function App() {
   const fetchParticipantsFromSheets = async (start: number, end: number): Promise<Participant[]> => {
     try {
       // Use direct fetch since script returns JSON, not JSONP
-      const url = `https://script.google.com/macros/s/AKfycbxMPX5SCQXNLS14H7jxFZAZnZf0UczpLehxWJ0DsSShnY12Pj7N9jtU-UAHxQOX69vf/exec?start=${start}&end=${end}`;
+      const url = `https://script.google.com/macros/s/AKfycbwCUWBZDaV-qZPzjiaaCsOvW-jh3p_xZdiN3rT9GXiqrleURE6JLVA7rMUBj50L6EMj/exec?start=${start}&end=${end}`;
       
       const response = await fetch(url, {
         method: 'GET',
@@ -710,12 +710,7 @@ export default function App() {
                               {participant && (
                                 <div className="text-sm text-slate-600 space-y-1">
                                   <p><span className="font-medium">Phone:</span> {participant.phone}</p>
-                                  {participant.propertyType && (
-                                    <p><span className="font-medium">Property Type:</span> {participant.propertyType}</p>
-                                  )}
-                                  {participant.investmentRange && (
-                                    <p><span className="font-medium">Investment Range:</span> {participant.investmentRange}</p>
-                                  )}
+                                  
                                 </div>
                               )}
                             </div>

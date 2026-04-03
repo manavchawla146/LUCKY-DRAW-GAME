@@ -52,15 +52,13 @@ function doPost(e) {
       if (!isNaN(id) && id >= start && id <= end) {
         participants.push({
           id: id,
-          timestamp: row[1] || '', // Column B: Timestamp
-          name: row[33] || '',      // Column AH: Name (34th column)
-          email: row[36] || '',     // Column AK: Email address (37th column)
-          phone: row[34] || '',     // Column AI: Phone number (35th column)
+          name: row[2] || '',      // Column C: Name
+          phone: row[3] || '',     // Column D: Phone number
           // Additional fields for future use
-          propertyType: row[28] || '', // Preferred Property Type
-          investmentRange: row[30] || '', // Investment Range
-          timePeriod: row[31] || '', // Time Period
-          areas: row[32] || ''      // Preferred Areas
+          propertyType: row[6] || '', // Preferred Property Type
+          investmentRange: row[8] || '', // Investment Range
+          timePeriod: row[9] || '', // Time Period
+          areas: row[10] || ''      // Preferred Areas
         });
       }
     });
