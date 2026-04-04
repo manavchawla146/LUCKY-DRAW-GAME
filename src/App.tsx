@@ -662,7 +662,7 @@ export default function App() {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden"
+              className="relative bg-white rounded-3xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden"
             >
               <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
                 <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
@@ -677,7 +677,7 @@ export default function App() {
                 </button>
               </div>
 
-              <div className="p-6 overflow-y-auto max-h-[60vh]">
+              <div className="p-6 overflow-y-auto max-h-[55vh]">
                 {winners.length === 0 ? (
                   <p className="text-slate-400 text-center">No winners selected yet.</p>
                 ) : (
@@ -722,7 +722,7 @@ export default function App() {
                 )}
               </div>
 
-              <div className="p-6 border-t border-slate-100 bg-slate-50">
+              <div className="p-4 border-t border-slate-100 bg-slate-50 flex-shrink-0">
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowWinnerDetails(false)}
