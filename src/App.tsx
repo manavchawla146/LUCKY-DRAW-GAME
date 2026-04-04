@@ -709,7 +709,7 @@ export default function App() {
                               </div>
                               {participant && (
                                 <div className="text-sm text-slate-600 space-y-1">
-                                  <p><span className="font-medium">Phone:</span> {participant.phone}</p>
+                                  
                                   
                                 </div>
                               )}
