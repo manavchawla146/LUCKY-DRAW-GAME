@@ -2,19 +2,27 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# Savitar Realty Lucky Draw Game
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/09249ce4-3788-4153-b901-60abba56fb04
+A modern React-based lucky draw game integrated with Google Sheets for participant data.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the app:
    `npm run dev`
+
+## Features
+
+- 🎯 Interactive lucky ball spinner game
+- 📊 Google Sheets integration for participant data
+- 🏆 Winner details display with contact information
+- 🎨 Modern UI with animations
+- ⚙️ Admin panel for game settings
+
+## Deployment
+
+The app is ready for deployment to any web platform. Simply build and deploy the static files.

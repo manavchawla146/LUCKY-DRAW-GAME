@@ -700,7 +700,7 @@ export default function App() {
                             </div>
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-2">
-                                <span className="text-2xl font-bold text-slate-800">#{winnerId}</span>
+                                
                                 {participant ? (
                                   <span className="text-lg font-semibold text-slate-700">{participant.name}</span>
                                 ) : (
